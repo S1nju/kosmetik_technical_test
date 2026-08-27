@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { API_ENDPOINTS } from '../api/api-endpoints';
 
 export interface AuthResponse {
   token?: string;
@@ -17,15 +17,14 @@ export interface AuthResponse {
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private backendUrl = environment.apiUrl || 'http://localhost:3000/api';
   
   private tokenKey = 'kosmetikon_token';
   public isAuthenticated$ = new BehaviorSubject<boolean>(this.hasToken());
 
-  constructor() {}
+  constructor() { }
 
-  login(credentials: {email: string, password: string}) {
-    return this.http.post<AuthResponse>(`${this.backendUrl}/auth/login`, credentials).pipe(
+  login(credentials: { email: string, password: string }) {
+    return this.http.post<AuthResponse>(API_ENDPOINTS.auth.login, credentials).pipe(
       tap(res => {
         if (res.token) {
           localStorage.setItem(this.tokenKey, res.token);
@@ -36,8 +35,8 @@ export class AuthService {
     );
   }
 
-  register(credentials: {email: string, password: string}) {
-    return this.http.post<AuthResponse>(`${this.backendUrl}/auth/register`, credentials);
+  register(credentials: { email: string, password: string }) {
+    return this.http.post<AuthResponse>(API_ENDPOINTS.auth.register, credentials);
   }
 
   logout() {
