@@ -50,7 +50,6 @@ services:
       - ./backend/.env
     environment:
       - NODE_ENV=development
-
     command: npm start
     networks:
       - test

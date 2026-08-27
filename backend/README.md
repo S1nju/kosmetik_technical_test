@@ -7,7 +7,7 @@ The backend is organized using a layered architecture to keep responsibilities s
 - **/config** - Environment and Database connection configurations.
 - **/controllers** - HTTP layer: extracting requests, calling services, and formatting HTTP responses.
 - **/middlewares** - Global request intercepts like the Error Handler and Request Validators.
-- **/migrations** - Step-by-step database schema versioning scripts (Laravel style).
+- **/migrations** - Step-by-step database schema versioning scripts.
 - **/models** - Application entities representing exact database tables.
 - **/repositories** - Data Access layer abstracting direct database calls away from business logic.
 - **/routes** - Maps incoming HTTP paths & verbs to their corresponding controllers & middlewares.
