@@ -1,4 +1,4 @@
-CREATE DATABASE kosmetikon;
+CREATE DATABASE IF NOT EXISTS kosmetikon;
 
 \c kosmetikon;
 
