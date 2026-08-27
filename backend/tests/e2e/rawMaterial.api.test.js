@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../app');
-const rawMaterialRepository = require('../../repositories/rawMaterial.repository');
+const RawMaterialRepository = require('../../repositories/rawMaterial.repository');
 
 // Mock the repository to avoid needing a real database connection during tests
 jest.mock('../../repositories/rawMaterial.repository');
@@ -16,7 +16,7 @@ describe('RawMaterial API (E2E)', () => {
 
   describe('GET /api/raw-materials', () => {
     it('should fetch paginated raw materials', async () => {
-      rawMaterialRepository.findAll.mockResolvedValue({
+      RawMaterialRepository.prototype.findAll.mockResolvedValue({
         count: 1,
         rows: [{ id: 1, name: 'Water Test' }]
       });
@@ -45,8 +45,8 @@ describe('RawMaterial API (E2E)', () => {
     });
 
     it('should return 201 for valid data', async () => {
-      rawMaterialRepository.findByCodeOrName.mockResolvedValue(null);
-      rawMaterialRepository.create.mockResolvedValue({ id: 1, name: 'New Material' });
+      RawMaterialRepository.prototype.findByCodeOrName.mockResolvedValue(null);
+      RawMaterialRepository.prototype.create.mockResolvedValue({ id: 1, name: 'New Material' });
 
       const response = await request(app).post('/api/raw-materials').send({
         name: 'New Material',

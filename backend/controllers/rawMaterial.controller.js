@@ -1,45 +1,47 @@
-const rawMaterialService = require('../services/rawMaterial.service');
-
 class RawMaterialController {
-  async getAll(req, res, next) {
+  constructor(rawMaterialService) {
+    this.rawMaterialService = rawMaterialService;
+  }
+
+  getAll = async (req, res, next) => {
     try {
-      const result = await rawMaterialService.getRawMaterials(req.query);
+      const result = await this.rawMaterialService.getRawMaterials(req.query);
       res.json(result);
     } catch (error) {
       next(error);
     }
   }
 
-  async getById(req, res, next) {
+  getById = async (req, res, next) => {
     try {
-      const result = await rawMaterialService.getRawMaterialById(req.params.id);
+      const result = await this.rawMaterialService.getRawMaterialById(req.params.id);
       res.json(result);
     } catch (error) {
       next(error);
     }
   }
 
-  async create(req, res, next) {
+  create = async (req, res, next) => {
     try {
-      const result = await rawMaterialService.createRawMaterial(req.body);
+      const result = await this.rawMaterialService.createRawMaterial(req.body);
       res.status(201).json(result);
     } catch (error) {
       next(error);
     }
   }
 
-  async update(req, res, next) {
+  update = async (req, res, next) => {
     try {
-      const result = await rawMaterialService.updateRawMaterial(req.params.id, req.body);
+      const result = await this.rawMaterialService.updateRawMaterial(req.params.id, req.body);
       res.json(result);
     } catch (error) {
       next(error);
     }
   }
 
-  async delete(req, res, next) {
+  delete = async (req, res, next) => {
     try {
-      await rawMaterialService.deleteRawMaterial(req.params.id);
+      await this.rawMaterialService.deleteRawMaterial(req.params.id);
       res.status(204).send();
     } catch (error) {
       next(error);
@@ -47,4 +49,4 @@ class RawMaterialController {
   }
 }
 
-module.exports = new RawMaterialController();
+module.exports = RawMaterialController;

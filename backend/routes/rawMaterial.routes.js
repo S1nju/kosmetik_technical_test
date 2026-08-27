@@ -1,7 +1,16 @@
 const express = require('express');
 const { body, query, param } = require('express-validator');
-const rawMaterialController = require('../controllers/rawMaterial.controller');
 const validateRequest = require('../middlewares/validate');
+
+// Import classes
+const RawMaterialRepository = require('../repositories/rawMaterial.repository');
+const RawMaterialService = require('../services/rawMaterial.service');
+const RawMaterialController = require('../controllers/rawMaterial.controller');
+
+// Instantiate dependencies (Dependency Injection)
+const rawMaterialRepository = new RawMaterialRepository();
+const rawMaterialService = new RawMaterialService(rawMaterialRepository);
+const rawMaterialController = new RawMaterialController(rawMaterialService);
 
 const router = express.Router();
 

@@ -57,4 +57,4 @@ class RawMaterialRepository {
   }
 }
 
-module.exports = new RawMaterialRepository();
+module.exports = RawMaterialRepository;

@@ -1,11 +1,13 @@
-const rawMaterialRepository = require('../repositories/rawMaterial.repository');
-
 class RawMaterialService {
+  constructor(rawMaterialRepository) {
+    this.rawMaterialRepository = rawMaterialRepository;
+  }
+
   async getRawMaterials(query) {
     const page = parseInt(query.page, 10) || 1;
     const limit = parseInt(query.limit, 10) || 10;
-    
-    const { count, rows } = await rawMaterialRepository.findAll({
+
+    const { count, rows } = await this.rawMaterialRepository.findAll({
       page,
       limit,
       name: query.name,
@@ -25,7 +27,7 @@ class RawMaterialService {
   }
 
   async getRawMaterialById(id) {
-    const item = await rawMaterialRepository.findById(id);
+    const item = await this.rawMaterialRepository.findById(id);
     if (!item) {
       const error = new Error('Raw material not found');
       error.statusCode = 404;
@@ -35,21 +37,19 @@ class RawMaterialService {
   }
 
   async createRawMaterial(data) {
-    // Check for unique code or name
-    const existing = await rawMaterialRepository.findByCodeOrName(data.code, data.name);
+    const existing = await this.rawMaterialRepository.findByCodeOrName(data.code, data.name);
     if (existing) {
       const error = new Error('A raw material with this name or code already exists.');
       error.statusCode = 409;
       throw error;
     }
 
-    return await rawMaterialRepository.create(data);
+    return await this.rawMaterialRepository.create(data);
   }
 
   async updateRawMaterial(id, data) {
-    // Check if another record has the same name or code
     if (data.code || data.name) {
-      const existing = await rawMaterialRepository.findByCodeOrName(data.code, data.name);
+      const existing = await this.rawMaterialRepository.findByCodeOrName(data.code, data.name);
       if (existing && existing.id !== parseInt(id, 10)) {
         const error = new Error('A raw material with this name or code already exists.');
         error.statusCode = 409;
@@ -57,7 +57,7 @@ class RawMaterialService {
       }
     }
 
-    const updated = await rawMaterialRepository.update(id, data);
+    const updated = await this.rawMaterialRepository.update(id, data);
     if (!updated) {
       const error = new Error('Raw material not found');
       error.statusCode = 404;
@@ -67,7 +67,7 @@ class RawMaterialService {
   }
 
   async deleteRawMaterial(id) {
-    const deleted = await rawMaterialRepository.delete(id);
+    const deleted = await this.rawMaterialRepository.delete(id);
     if (!deleted) {
       const error = new Error('Raw material not found');
       error.statusCode = 404;
@@ -77,4 +77,4 @@ class RawMaterialService {
   }
 }
 
-module.exports = new RawMaterialService();
+module.exports = RawMaterialService;
