@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { NgIf, NgFor, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -114,6 +114,7 @@ export class Dashboard implements OnInit {
   private rawMaterialService = inject(RawMaterialService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   materials: RawMaterial[] = [];
   meta: PaginatedResponse<RawMaterial>['meta'] | null = null;
@@ -131,13 +132,18 @@ export class Dashboard implements OnInit {
 
   loadPage(page: number) {
     this.isLoading = true;
+    this.cdr.markForCheck();
     this.rawMaterialService.getMaterials(page, 10, this.filters).subscribe({
       next: (res) => {
         this.materials = res.data;
         this.meta = res.meta;
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
-      error: () => this.isLoading = false
+      error: () => {
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      }
     });
   }
 
