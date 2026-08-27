@@ -81,10 +81,10 @@ export class Register {
 
   onSubmit() {
     if (this.registerForm.invalid) return;
-    
+
     this.isLoading = true;
     this.errorMsg = '';
-    
+
     this.authService.register(this.registerForm.getRawValue()).subscribe({
       next: () => {
         this.isLoading = false;
