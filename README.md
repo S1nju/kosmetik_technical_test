@@ -21,8 +21,12 @@ This project implements the "Raw Materials" module for KosmetikOn's inventory ma
 1. Ensure ports **`3000`** (Backend), **`4200`** (Frontend), and **`5432`** (DB) are free.
 2. Build and start the containers from the root directory:
 ```bash
+git clone https://github.com/S1nju/kosmetik_technical_test.git
+&&
 cp ./backend/.env.example ./backend/.env
+&&
 cp ./frontend/.env.example ./frontend/.env
+&&
 docker compose up --build
 ```
 3. To stop gracefully and clean up the database volume:
