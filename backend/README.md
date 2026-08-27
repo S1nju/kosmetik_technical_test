@@ -21,8 +21,11 @@ This is the backend for the KosmetikOn technical test, designed to manage Cosmet
    - `POSTGRES_HOST`
    - `POSTGRES_PORT` (default 5432)
 3. Install dependencies: `npm install`
-4. Start the server: `npm start`
-5. Visit the Swagger documentation at: `http://localhost:3000/api-docs`
+4. Run migrations and seed data: 
+   - `npm run db:migrate`
+   - `npm run db:seed`
+5. Start the server: `npm start`
+6. Visit the Swagger documentation at: `http://localhost:3000/api-docs`
 
 ## Tests
 Testing runs across standard unit layers isolating the business logic and full E2E HTTP requests:
