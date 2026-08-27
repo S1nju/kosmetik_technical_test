@@ -26,6 +26,19 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Rate Limiter Setup
+const rateLimit = require('express-rate-limit');
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: {
+    error: {
+      message: 'Too many requests from this IP, please try again after 15 minutes'
+    }
+  }
+});
+app.use('/api/', apiLimiter);
+
 app.use('/api/raw-materials', rawMaterialRoutes);
 
 // Error Handler Middleware
