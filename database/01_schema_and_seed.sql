@@ -15,6 +15,14 @@ CREATE TABLE IF NOT EXISTS raw_materials (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Note: In a production environment, PostgreSQL automatically manages `updated_at` via triggers if set up, 
 -- but here we initialize it to current timestamp.
 
@@ -26,3 +34,5 @@ VALUES
     ('Sodium Laureth Sulfate', 'RM-003', 'surfactant', 'kg', 100.00, 'active', 'SLES, primary foaming agent.'),
     ('Phenoxyethanol', 'RM-004', 'preservative', 'kg', 5.00, 'active', 'Broad spectrum preservative.'),
     ('Discontinued Perfume', 'RM-005', 'fragrance', 'g', 0.00, 'inactive', 'Old fragrance formulation.');
+
+

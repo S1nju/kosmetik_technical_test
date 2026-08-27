@@ -9,7 +9,9 @@ const sequelize = require('./config/database');
 
 // Import routes
 var rawMaterialRoutes = require('./routes/rawMaterial.routes');
+var authRoutes = require('./routes/auth.routes');
 const errorHandler = require('./middlewares/errorHandler');
+const authMiddleware = require('./middlewares/auth.middleware');
 
 var app = express();
 
@@ -39,7 +41,8 @@ const apiLimiter = rateLimit({
 });
 app.use('/api/', apiLimiter);
 
-app.use('/api/raw-materials', rawMaterialRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/raw-materials', authMiddleware, rawMaterialRoutes);
 
 // Error Handler Middleware
 app.use(errorHandler);

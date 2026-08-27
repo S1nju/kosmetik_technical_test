@@ -7,8 +7,40 @@ servers:
   - url: http://localhost:3000/api
     description: Local development server
 paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthInput'
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: Validation error
+        '409':
+          description: Email already used
+  /auth/login:
+    post:
+      summary: Login to get a JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthInput'
+      responses:
+        '200':
+          description: Successful login
+        '401':
+          description: Invalid credentials
   /raw-materials:
     get:
+      security:
+        - bearerAuth: []
       summary: Get all raw materials
       parameters:
         - in: query
@@ -37,6 +69,8 @@ paths:
         '200':
           description: A paginated list of raw materials
     post:
+      security:
+        - bearerAuth: []
       summary: Create a raw material
       requestBody:
         required: true
@@ -101,7 +135,24 @@ paths:
           description: Not found
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
+    AuthInput:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
     RawMaterialInput:
       type: object
       required:

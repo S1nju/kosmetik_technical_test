@@ -2,6 +2,11 @@ const request = require('supertest');
 const app = require('../../app');
 const RawMaterialRepository = require('../../repositories/rawMaterial.repository');
 
+// Mock Auth Middleware
+jest.mock('../../middlewares/auth.middleware', () => {
+  return (req, res, next) => next();
+});
+
 // Mock the repository to avoid needing a real database connection during tests
 jest.mock('../../repositories/rawMaterial.repository');
 jest.mock('../../config/database', () => ({
