@@ -101,10 +101,10 @@ import { AuthService } from '../../../core/services/auth';
         </div>
         
         <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-surface-700 flex items-center justify-between bg-surface-900/40" *ngIf="meta && meta.totalPages > 1">
-          <button [disabled]="meta.currentPage === 1" (click)="loadPage(meta.currentPage - 1)" class="btn-secondary text-xs px-4 py-1.5">Previous</button>
-          <span class="text-xs text-slate-500">Page {{ meta.currentPage }} of {{ meta.totalPages }}</span>
-          <button [disabled]="meta.currentPage === meta.totalPages" (click)="loadPage(meta.currentPage + 1)" class="btn-secondary text-xs px-4 py-1.5">Next</button>
+        <div class="px-6 py-4 border-t border-slate-200 flex items-center justify-between bg-slate-50" *ngIf="meta">
+          <button [disabled]="meta.currentPage === 1" (click)="loadPage(meta.currentPage - 1)" class="btn-secondary text-xs px-4 py-1.5" [class.opacity-50]="meta.currentPage === 1">Previous</button>
+          <span class="text-xs text-slate-500">Page {{ meta.currentPage }} of {{ meta.totalPages || 1 }}</span>
+          <button [disabled]="meta.currentPage === meta.totalPages || meta.totalPages === 0" (click)="loadPage(meta.currentPage + 1)" class="btn-secondary text-xs px-4 py-1.5" [class.opacity-50]="meta.currentPage === meta.totalPages || meta.totalPages === 0">Next</button>
         </div>
       </div>
     </div>
