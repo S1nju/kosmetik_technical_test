@@ -26,25 +26,31 @@ import { AuthService } from '../../../core/services/auth';
       </div>
 
       <!-- Filters -->
-      <div class="glass-panel rounded-xl p-5 mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="glass-panel rounded-xl p-5 mb-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
         <div>
           <label class="form-label text-xs">Search by Name</label>
-          <input type="text" [(ngModel)]="filters.name" (ngModelChange)="onFilterChange()" class="input-field py-2 text-sm" placeholder="e.g. Water" />
+          <input type="text" [(ngModel)]="filters.name" class="input-field py-2 text-sm" placeholder="e.g. Water" />
         </div>
         <div>
           <label class="form-label text-xs">Category</label>
-          <input type="text" [(ngModel)]="filters.category" (ngModelChange)="onFilterChange()" class="input-field py-2 text-sm" placeholder="e.g. Solvent" />
+          <input type="text" [(ngModel)]="filters.category" class="input-field py-2 text-sm" placeholder="e.g. Solvent" />
         </div>
         <div>
           <label class="form-label text-xs">Status</label>
-          <select [(ngModel)]="filters.status" (ngModelChange)="onFilterChange()" class="input-field py-2 text-sm bg-surface-900 border-surface-700">
+          <select [(ngModel)]="filters.status" class="input-field py-2 text-sm bg-surface-900 border-surface-700">
             <option value="">All Statuses</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
         </div>
-        <div class="flex items-end flex-row-reverse mb-1 text-sm text-gray-500">
-          <span *ngIf="meta">Total: {{ meta.totalItems }}</span>
+        <div class="flex items-center justify-between">
+          <button (click)="applyFilters()" class="btn-primary py-2 px-4 shadow-sm w-full md:w-auto text-sm">
+             <span class="flex items-center gap-2 justify-center">
+               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+               Search
+             </span>
+          </button>
+          <span *ngIf="meta" class="text-xs text-gray-500 ml-4 hidden md:block">Total: {{ meta.totalItems }}</span>
         </div>
       </div>
 
@@ -119,8 +125,6 @@ export class Dashboard implements OnInit {
     status: ''
   };
 
-  private typingTimer: any;
-
   ngOnInit() {
     this.loadPage(1);
   }
@@ -137,11 +141,8 @@ export class Dashboard implements OnInit {
     });
   }
 
-  onFilterChange() {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.loadPage(1);
-    }, 500);
+  applyFilters() {
+    this.loadPage(1);
   }
 
   deleteItem(item: RawMaterial) {
