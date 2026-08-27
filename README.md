@@ -16,7 +16,18 @@ This project implements the "Raw Materials" module for KosmetikOn's inventory ma
 
 ## Installation and Run
 
-### Option A: With Docker (Recommended)
+### Option A: With Script (Recommended)
+
+1. Ensure ports **`3000`** (Backend), **`4200`** (Frontend), and **`5432`** (DB) are free.
+2. Build and start the containers from the root directory:
+```bash
+./start.sh
+```
+3. To stop gracefully and clean up the database volume:
+```bash
+docker compose down -v
+```
+### Option B: With Docker (Recommended)
 
 1. Ensure ports **`3000`** (Backend), **`4200`** (Frontend), and **`5432`** (DB) are free.
 2. Build and start the containers from the root directory:
@@ -41,7 +52,7 @@ docker compose down -v
 
 *(Note: Docker automatically runs the health checks and initialization scripts located in `/database/01_schema_and_seed.sql` on first boot).*
 
-### Option B: Without Docker (Manual Execution)
+### Option C: Without Docker (Manual Execution)
 
 **1. Database Initialization:**
 ```sql
