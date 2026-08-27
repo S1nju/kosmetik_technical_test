@@ -13,20 +13,27 @@ services:
     environment:
       - NODE_ENV=development
     command: npm start
-
+    networks:
+      - test
   db:
     image: postgres:13
     container_name: postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=kosmetikon
     ports:
       - "5432:5432"
     volumes:
       - ./postgres:/var/lib/postgresql/data
       - ./database:/docker-entrypoint-initdb.d
-
+    networks:
+      - test
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   backend:
     build:
       context: ./backend
@@ -34,14 +41,19 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./backend:/app
       - /app/node_modules
+    env_file:
+      - ./backend/.env
     environment:
       - NODE_ENV=development
-      - POSTGRES_HOST=postgres
+
     command: npm start
+    networks:
+      - test
 networks:
-  default:
+  test:
     driver: bridge
