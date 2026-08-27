@@ -13,8 +13,8 @@ import { AuthService } from '../../../core/services/auth';
     <div class="p-6 md:p-10 max-w-7xl mx-auto animate-fade-in-up">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Inventory Dashboard</h1>
-          <p class="text-gray-400 mt-1">Manage cosmetic raw materials</p>
+          <h1 class="text-3xl font-bold text-slate-800">Inventory Dashboard</h1>
+          <p class="text-slate-500 mt-1">Manage cosmetic raw materials</p>
         </div>
         <div class="flex gap-4">
           <button (click)="logout()" class="btn-secondary text-sm">Sign Out</button>
@@ -37,7 +37,7 @@ import { AuthService } from '../../../core/services/auth';
         </div>
         <div>
           <label class="form-label text-xs">Status</label>
-          <select [(ngModel)]="filters.status" class="input-field py-2 text-sm bg-surface-900 border-surface-700">
+          <select [(ngModel)]="filters.status" class="input-field py-2 text-sm">
             <option value="">All Statuses</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
@@ -50,15 +50,15 @@ import { AuthService } from '../../../core/services/auth';
                Search
              </span>
           </button>
-          <span *ngIf="meta" class="text-xs text-gray-500 ml-4 hidden md:block">Total: {{ meta.totalItems }}</span>
+          <span *ngIf="meta" class="text-xs text-slate-500 ml-4 hidden md:block">Total: {{ meta.totalItems }}</span>
         </div>
       </div>
 
       <!-- Table -->
-      <div class="glass-panel overflow-hidden rounded-xl border border-surface-700">
+      <div class="glass-panel overflow-hidden rounded-xl">
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm text-gray-300">
-            <thead class="bg-surface-900 text-xs text-gray-400 uppercase tracking-wider border-b border-surface-700">
+          <table class="w-full text-left text-sm text-slate-600">
+            <thead class="bg-surface-700/30 text-xs text-slate-500 uppercase tracking-wider border-b border-surface-700">
               <tr>
                 <th class="px-6 py-4 font-medium">Code & Name</th>
                 <th class="px-6 py-4 font-medium">Category</th>
@@ -69,31 +69,31 @@ import { AuthService } from '../../../core/services/auth';
             </thead>
             <tbody class="divide-y divide-surface-700">
               <tr *ngIf="isLoading">
-                 <td colspan="5" class="px-6 py-8 text-center text-gray-500">Loading components...</td>
+                 <td colspan="5" class="px-6 py-8 text-center text-slate-500">Loading components...</td>
               </tr>
               <tr *ngIf="!isLoading && materials.length === 0">
-                 <td colspan="5" class="px-6 py-8 text-center text-gray-500">No raw materials found matching filters.</td>
+                 <td colspan="5" class="px-6 py-8 text-center text-slate-500">No raw materials found matching filters.</td>
               </tr>
-              <tr *ngFor="let item of materials" class="hover:bg-surface-700/30 transition-colors group">
+              <tr *ngFor="let item of materials" class="hover:bg-surface-700/20 transition-colors group">
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="font-medium text-white group-hover:text-primary-400 transition-colors">{{ item.name }}</div>
-                  <div class="text-xs text-gray-500 mt-0.5">{{ item.code }}</div>
+                  <div class="font-medium text-slate-800 group-hover:text-primary-600 transition-colors">{{ item.name }}</div>
+                  <div class="text-xs text-slate-500 mt-0.5">{{ item.code }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-700 text-gray-300">{{ item.category }}</span>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-200 text-slate-700">{{ item.category }}</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-slate-700">
+                  {{ item.quantity }} <span class="text-xs text-slate-500">{{ item.unit_of_measure }}</span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  {{ item.quantity }} <span class="text-xs text-gray-500">{{ item.unit_of_measure }}</span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="inline-flex items-center gap-1.5" [ngClass]="item.status === 'active' ? 'text-green-400' : 'text-red-400'">
-                    <span class="w-2 h-2 rounded-full" [ngClass]="item.status === 'active' ? 'bg-green-400' : 'bg-red-400'"></span>
+                  <span class="inline-flex items-center gap-1.5" [ngClass]="item.status === 'active' ? 'text-emerald-600' : 'text-red-600'">
+                    <span class="w-2 h-2 rounded-full" [ngClass]="item.status === 'active' ? 'bg-emerald-500' : 'bg-red-500'"></span>
                     {{ item.status | titlecase }}
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right">
-                  <a [routerLink]="['/raw-materials/edit', item.id]" class="text-indigo-400 hover:text-indigo-300 transition-colors mr-4 font-medium px-2 py-1 rounded bg-indigo-500/10">Edit</a>
-                  <button (click)="deleteItem(item)" class="text-red-400 hover:text-red-300 transition-colors font-medium px-2 py-1 rounded bg-red-500/10">Delete</button>
+                  <a [routerLink]="['/raw-materials/edit', item.id]" class="text-primary-600 hover:text-primary-700 transition-colors mr-4 font-medium px-2 py-1 rounded bg-primary-50">Edit</a>
+                  <button (click)="deleteItem(item)" class="text-red-600 hover:text-red-700 transition-colors font-medium px-2 py-1 rounded bg-red-50">Delete</button>
                 </td>
               </tr>
             </tbody>
@@ -101,9 +101,9 @@ import { AuthService } from '../../../core/services/auth';
         </div>
         
         <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-surface-700 flex items-center justify-between bg-surface-900/50" *ngIf="meta && meta.totalPages > 1">
+        <div class="px-6 py-4 border-t border-surface-700 flex items-center justify-between bg-surface-900/40" *ngIf="meta && meta.totalPages > 1">
           <button [disabled]="meta.currentPage === 1" (click)="loadPage(meta.currentPage - 1)" class="btn-secondary text-xs px-4 py-1.5">Previous</button>
-          <span class="text-xs text-gray-400">Page {{ meta.currentPage }} of {{ meta.totalPages }}</span>
+          <span class="text-xs text-slate-500">Page {{ meta.currentPage }} of {{ meta.totalPages }}</span>
           <button [disabled]="meta.currentPage === meta.totalPages" (click)="loadPage(meta.currentPage + 1)" class="btn-secondary text-xs px-4 py-1.5">Next</button>
         </div>
       </div>
