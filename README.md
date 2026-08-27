@@ -2,6 +2,10 @@
 
 This project implements the "Raw Materials" module for KosmetikOn's inventory management system. It provides a full-stack solution featuring a Node.js backend using Express and Sequelize paired with an Angular frontend.
 
+## Sector Knowledge
+** In your own words, what is a raw material in cosmetology? ** 
+its any substance that is used in the production of a cosmetic product it can be combined with other subtances to make the final product. 
+
 ## Documentation Index
 
 | Component | Path / Link | Description |
