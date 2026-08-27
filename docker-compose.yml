@@ -14,19 +14,6 @@ services:
       - NODE_ENV=development
     command: npm start
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    command: npm start
-
   db:
     image: postgres:13
     container_name: postgres
@@ -39,6 +26,22 @@ services:
     volumes:
       - ./postgres:/var/lib/postgresql/data
       - ./database:/docker-entrypoint-initdb.d
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_HOST=postgres
+    command: npm start
 networks:
   default:
     driver: bridge
