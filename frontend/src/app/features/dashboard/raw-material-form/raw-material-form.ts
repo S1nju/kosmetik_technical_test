@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { RawMaterialService } from '../../../core/services/raw-material';
+import { RawMaterialService, RawMaterial } from '../../../core/services/raw-material';
 
 @Component({
   selector: 'app-raw-material-form',
@@ -160,7 +160,7 @@ export class RawMaterialForm implements OnInit {
     this.isLoading = true;
     this.errorMsg = '';
 
-    const payload = this.materialForm.getRawValue();
+    const payload = this.materialForm.getRawValue() as Partial<RawMaterial>;
 
     const request = this.isEditMode
       ? this.rawMaterialService.updateMaterial(this.materialId!, payload)
