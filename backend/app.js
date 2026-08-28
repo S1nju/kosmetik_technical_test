@@ -24,9 +24,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Swagger setup
 const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'KosmetikOn Technical Test API',
+      version: '1.0.0',
+      description: 'API documentation generated automatically from JSDoc comments within the code.'
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server'
+      }
+    ]
+  },
+  apis: ['./routes/*.js', './swagger-schemas.js']
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Rate Limiter Setup
 const rateLimit = require('express-rate-limit');

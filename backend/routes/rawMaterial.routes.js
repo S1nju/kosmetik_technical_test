@@ -24,6 +24,117 @@ const materialValidationRules = [
   body('description').optional().isString()
 ];
 
+/**
+ * @swagger
+ * tags:
+ *   name: RawMaterials
+ *   description: Raw material inventory management
+ * 
+ * /api/raw-materials:
+ *   get:
+ *     summary: Retrieve paginated raw materials
+ *     tags: [RawMaterials]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A list of raw materials
+ *   post:
+ *     summary: Create a new raw material
+ *     tags: [RawMaterials]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RawMaterial'
+ *     responses:
+ *       201:
+ *         description: Created successfully
+ *       400:
+ *         description: Validation failed
+ * 
+ * /api/raw-materials/{id}:
+ *   get:
+ *     summary: Get raw material by ID
+ *     tags: [RawMaterials]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Found material
+ *       404:
+ *         description: Material not found
+ *   put:
+ *     summary: Update raw material by ID
+ *     tags: [RawMaterials]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RawMaterial'
+ *     responses:
+ *       200:
+ *         description: Updated successfully
+ *       404:
+ *         description: Material not found
+ *   delete:
+ *     summary: Delete raw material by ID
+ *     tags: [RawMaterials]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Deleted successfully
+ *       404:
+ *         description: Material not found
+ */
+
 router.get('/', [
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 }),
