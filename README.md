@@ -1,5 +1,20 @@
 # KosmetikOn - Raw Materials Module
 
+## Application Gallery
+
+<details>
+  <summary>Click to view screenshots</summary>
+  <img src="test_images/Screenshot%20From%202026-05-02%2003-24-10.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-41-00.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-41-06.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-41-21.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-41-30.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-41-47.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-41-56.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-42-06.png" width="48%">
+  <img src="test_images/Screenshot%20from%202026-08-28%2003-42-19.png" width="48%">
+</details>
+
 This project implements the "Raw Materials" module for KosmetikOn's inventory management system. It provides a full-stack solution featuring a Node.js backend using Express and Sequelize paired with an Angular frontend.
 
 ## Sector Knowledge
