@@ -1,6 +1,6 @@
 # KosmetikOn - Raw Materials Module
 
-## Application Gallery
+## Application proof of work
 
 <details>
   <summary>Click to view screenshots</summary>
