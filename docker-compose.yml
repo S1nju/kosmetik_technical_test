@@ -33,7 +33,7 @@ services:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 12
   backend:
     build:
       context: ./backend
@@ -50,7 +50,6 @@ services:
       - ./backend/.env
     environment:
       - NODE_ENV=development
-    command: npm start
     networks:
       - test
 networks:
