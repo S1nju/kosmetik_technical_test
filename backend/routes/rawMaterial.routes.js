@@ -29,7 +29,10 @@ const materialValidationRules = [
  * tags:
  *   name: RawMaterials
  *   description: Raw material inventory management
- * 
+ */
+
+/**
+ * @swagger
  * /api/raw-materials:
  *   get:
  *     summary: Retrieve paginated raw materials
@@ -61,23 +64,15 @@ const materialValidationRules = [
  *     responses:
  *       200:
  *         description: A list of raw materials
- *   post:
- *     summary: Create a new raw material
- *     tags: [RawMaterials]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/RawMaterial'
- *     responses:
- *       201:
- *         description: Created successfully
- *       400:
- *         description: Validation failed
- * 
+ */
+router.get('/', [
+  query('page').optional().isInt({ min: 1 }),
+  query('limit').optional().isInt({ min: 1, max: 100 }),
+  validateRequest
+], rawMaterialController.getAll);
+
+/**
+ * @swagger
  * /api/raw-materials/{id}:
  *   get:
  *     summary: Get raw material by ID
@@ -95,6 +90,37 @@ const materialValidationRules = [
  *         description: Found material
  *       404:
  *         description: Material not found
+ */
+router.get('/:id', [
+  param('id').isInt(),
+  validateRequest
+], rawMaterialController.getById);
+
+/**
+ * @swagger
+ * /api/raw-materials:
+ *   post:
+ *     summary: Create a new raw material
+ *     tags: [RawMaterials]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RawMaterial'
+ *     responses:
+ *       201:
+ *         description: Created successfully
+ *       400:
+ *         description: Validation failed
+ */
+router.post('/', [...materialValidationRules, validateRequest], rawMaterialController.create);
+
+/**
+ * @swagger
+ * /api/raw-materials/{id}:
  *   put:
  *     summary: Update raw material by ID
  *     tags: [RawMaterials]
@@ -117,6 +143,16 @@ const materialValidationRules = [
  *         description: Updated successfully
  *       404:
  *         description: Material not found
+ */
+router.put('/:id', [
+  param('id').isInt(),
+  ...materialValidationRules,
+  validateRequest
+], rawMaterialController.update);
+
+/**
+ * @swagger
+ * /api/raw-materials/{id}:
  *   delete:
  *     summary: Delete raw material by ID
  *     tags: [RawMaterials]
@@ -134,26 +170,6 @@ const materialValidationRules = [
  *       404:
  *         description: Material not found
  */
-
-router.get('/', [
-  query('page').optional().isInt({ min: 1 }),
-  query('limit').optional().isInt({ min: 1, max: 100 }),
-  validateRequest
-], rawMaterialController.getAll);
-
-router.get('/:id', [
-  param('id').isInt(),
-  validateRequest
-], rawMaterialController.getById);
-
-router.post('/', [...materialValidationRules, validateRequest], rawMaterialController.create);
-
-router.put('/:id', [
-  param('id').isInt(),
-  ...materialValidationRules,
-  validateRequest
-], rawMaterialController.update);
-
 router.delete('/:id', [
   param('id').isInt(),
   validateRequest

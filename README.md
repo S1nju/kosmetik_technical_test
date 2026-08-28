@@ -69,7 +69,7 @@ docker compose down -v
 **Access Points:**
 - **Frontend UI:** http://localhost:4200
 - **Backend API:** http://localhost:3000/api/raw-materials
-- **Swagger Docs:** http://localhost:3000/api-docs
+- **Swagger Docs:** http://localhost:3000/api-docs (Automatically generated dynamically from explicit `@swagger` JSDoc comments directly within the source route handlers)
 
 *(Note: Docker automatically runs the health checks and initialization scripts located in `/database/01_schema_and_seed.sql` on first boot).*
 

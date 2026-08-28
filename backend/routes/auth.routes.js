@@ -22,7 +22,10 @@ const authValidationRules = [
  * tags:
  *   name: Auth
  *   description: User authentication operations
- * 
+ */
+
+/**
+ * @swagger
  * /api/auth/register:
  *   post:
  *     summary: Register a new user
@@ -46,7 +49,11 @@ const authValidationRules = [
  *         description: Validation failed
  *       409:
  *         description: Email already in use
- * 
+ */
+router.post('/register', [...authValidationRules, validateRequest], authController.register);
+
+/**
+ * @swagger
  * /api/auth/login:
  *   post:
  *     summary: User login
@@ -69,7 +76,6 @@ const authValidationRules = [
  *       401:
  *         description: Invalid credentials
  */
-router.post('/register', [...authValidationRules, validateRequest], authController.register);
 router.post('/login', [...authValidationRules, validateRequest], authController.login);
 
 module.exports = router;
