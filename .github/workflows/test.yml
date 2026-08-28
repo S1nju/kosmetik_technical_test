@@ -1,0 +1,48 @@
+name: CI Test Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend-tests:
+    name: Backend Unit & E2E Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        
+    - name: Install backend dependencies
+      working-directory: ./backend
+      run: npm install
+      
+    - name: Run backend tests
+      working-directory: ./backend
+      run: npm run test
+
+  frontend-tests:
+    name: Frontend Angular Specs
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        
+    - name: Install frontend dependencies
+      working-directory: ./frontend
+      run: npm install
+      
+    - name: Run frontend tests
+      working-directory: ./frontend
+      run: npm run test -- --watch=false
