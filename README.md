@@ -16,7 +16,8 @@ its any substance that is used in the production of a cosmetic product it can be
 ## Prerequisites
 
 - **Docker:** Docker Daemon & Docker Compose v2+
-- **Manual (Without Docker):** Node.js v18/22+, Angular CLI, PostgreSQL 13+
+- **Manual (Without Docker):** Node.js v22+, Angular CLI, PostgreSQL 13+
+- **CI/CD:** Automated GitHub Actions pipeline for continuous Unit & E2E testing evaluates smoothly upon push.
 
 ## Installation and Run
 
