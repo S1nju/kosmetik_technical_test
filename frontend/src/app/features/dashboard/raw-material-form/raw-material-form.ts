@@ -37,19 +37,27 @@ import { RawMaterialService, RawMaterial } from '../../../core/services/raw-mate
             <div class="group">
               <label class="form-label">Material Name <span class="text-primary-600">*</span></label>
               <input type="text" formControlName="name" class="input-field" placeholder="e.g. Sodium Hyaluronate" />
-              <div *ngIf="materialForm.get('name')?.touched && materialForm.get('name')?.invalid" class="text-red-500 text-xs mt-1">Required, Max 150 chars.</div>
+              <div *ngIf="materialForm.get('name')?.touched && materialForm.get('name')?.invalid" class="text-red-500 text-xs mt-1 flex flex-col">
+                <span *ngIf="materialForm.get('name')?.hasError('required')">Material name is required.</span>
+                <span *ngIf="materialForm.get('name')?.hasError('maxlength')">Cannot exceed 150 characters.</span>
+              </div>
             </div>
             
             <div class="group">
               <label class="form-label">Identifier Code <span class="text-primary-600">*</span></label>
               <input type="text" formControlName="code" class="input-field" placeholder="e.g. INCI-102" />
-              <div *ngIf="materialForm.get('code')?.touched && materialForm.get('code')?.invalid" class="text-red-500 text-xs mt-1">Required unique formulation code.</div>
+              <div *ngIf="materialForm.get('code')?.touched && materialForm.get('code')?.invalid" class="text-red-500 text-xs mt-1 flex flex-col">
+                <span *ngIf="materialForm.get('code')?.hasError('required')">Identifier code is required.</span>
+                <span *ngIf="materialForm.get('code')?.hasError('maxlength')">Cannot exceed 50 characters.</span>
+              </div>
             </div>
 
             <div class="group">
               <label class="form-label">Category <span class="text-primary-600">*</span></label>
               <input type="text" formControlName="category" class="input-field" placeholder="e.g. Active Ingredient" />
-              <div *ngIf="materialForm.get('category')?.touched && materialForm.get('category')?.invalid" class="text-red-500 text-xs mt-1">Required.</div>
+              <div *ngIf="materialForm.get('category')?.touched && materialForm.get('category')?.invalid" class="text-red-500 text-xs mt-1">
+                <span *ngIf="materialForm.get('category')?.hasError('required')">Category is required.</span>
+              </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -68,7 +76,10 @@ import { RawMaterialService, RawMaterial } from '../../../core/services/raw-mate
                 </select>
               </div>
             </div>
-            <div *ngIf="materialForm.get('quantity')?.invalid" class="text-red-500 text-xs col-span-2 -mt-4">Quantity must be a positive number and unit is required.</div>
+            <div *ngIf="materialForm.get('quantity')?.invalid" class="text-red-500 text-xs col-span-2 -mt-4 flex flex-col">
+               <span *ngIf="materialForm.get('quantity')?.hasError('required')">Quantity is required.</span>
+               <span *ngIf="materialForm.get('quantity')?.hasError('min')">Quantity cannot be negative.</span>
+            </div>
           </div>
           
           <div class="group mb-6">

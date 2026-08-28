@@ -39,7 +39,10 @@ import { NgIf } from '@angular/common';
             <div class="relative">
               <input type="email" formControlName="email" class="input-field" placeholder="employee@kosmetikon.com" />
             </div>
-            <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-red-500 text-xs mt-1">Valid email is required.</div>
+            <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="registerForm.get('email')?.hasError('required')">Email is required.</span>
+              <span *ngIf="registerForm.get('email')?.hasError('email')">Please provide a valid email format.</span>
+            </div>
           </div>
 
           <div class="group">
@@ -47,7 +50,10 @@ import { NgIf } from '@angular/common';
             <div class="relative">
               <input type="password" formControlName="password" class="input-field" placeholder="Min 6 characters" />
             </div>
-            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-red-500 text-xs mt-1">Password must be at least 6 characters.</div>
+            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="registerForm.get('password')?.hasError('required')">Password is required.</span>
+              <span *ngIf="registerForm.get('password')?.hasError('minlength')">Password must be at least 6 characters long.</span>
+            </div>
           </div>
 
           <button type="submit" [disabled]="registerForm.invalid || isLoading" class="btn-primary w-full mt-2">

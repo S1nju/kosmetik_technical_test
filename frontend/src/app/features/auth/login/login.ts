@@ -40,7 +40,10 @@ import { AuthService } from '../../../core/services/auth';
               </div>
               <input type="email" formControlName="email" class="input-field pl-10" placeholder="admin@admin.com" />
             </div>
-            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500 text-xs mt-1">Valid email is required.</div>
+            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500 text-xs mt-1 flex flex-col">
+              <span *ngIf="loginForm.get('email')?.hasError('required')">Email address is required.</span>
+              <span *ngIf="loginForm.get('email')?.hasError('email')">Please provide a valid email format.</span>
+            </div>
           </div>
 
           <div class="group">
@@ -50,6 +53,9 @@ import { AuthService } from '../../../core/services/auth';
                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
               </div>
               <input type="password" formControlName="password" class="input-field pl-10" placeholder="••••••••" />
+            </div>
+            <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</span>
             </div>
           </div>
 
