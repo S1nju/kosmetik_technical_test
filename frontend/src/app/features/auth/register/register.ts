@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth';
@@ -75,6 +75,7 @@ export class Register {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   registerForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -95,11 +96,13 @@ export class Register {
       next: () => {
         this.isLoading = false;
         this.successMsg = 'Account created successfully! Redirecting...';
+        this.cdr.markForCheck();
         setTimeout(() => this.router.navigate(['/login']), 1500);
       },
       error: (err) => {
         this.isLoading = false;
         this.errorMsg = err.error?.error?.message || 'Registration failed. Email might exist.';
+        this.cdr.markForCheck();
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -80,6 +80,7 @@ import { AuthService } from '../../../core/services/auth';
 export class Login {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   loginForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -99,6 +100,7 @@ export class Login {
       error: (err) => {
         this.isLoading = false;
         this.errorMsg = err.error?.error?.message || 'Invalid credentials or server error.';
+        this.cdr.markForCheck();
       }
     });
   }

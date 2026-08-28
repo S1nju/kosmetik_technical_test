@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -122,6 +122,7 @@ export class RawMaterialForm implements OnInit {
   private rawMaterialService = inject(RawMaterialService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
 
   materialId: number | null = null;
   isEditMode = false;
@@ -160,8 +161,12 @@ export class RawMaterialForm implements OnInit {
           status: material.status,
           description: material.description
         });
+        this.cdr.markForCheck();
       },
-      error: () => this.router.navigate(['/dashboard'])
+      error: () => {
+        this.router.navigate(['/dashboard']);
+        this.cdr.markForCheck();
+      }
     });
   }
 
@@ -180,11 +185,13 @@ export class RawMaterialForm implements OnInit {
     request.subscribe({
       next: () => {
         this.isLoading = false;
+        this.cdr.markForCheck();
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.isLoading = false;
         this.errorMsg = err.error?.error?.message || 'An error occurred. Check code/name uniqueness constraints.';
+        this.cdr.markForCheck();
       }
     });
   }
