@@ -4,7 +4,6 @@
 
 <details>
   <summary>Click to view screenshots</summary>
-  <img src="test_images/Screenshot%20From%202026-05-02%2003-24-10.png" width="48%">
   <img src="test_images/Screenshot%20from%202026-08-28%2003-41-00.png" width="48%">
   <img src="test_images/Screenshot%20from%202026-08-28%2003-41-06.png" width="48%">
   <img src="test_images/Screenshot%20from%202026-08-28%2003-41-21.png" width="48%">
