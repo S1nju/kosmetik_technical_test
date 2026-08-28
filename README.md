@@ -118,5 +118,4 @@ erDiagram
 
 ## Technical Decisions
 - **Dependency Injection (DI)**: Backend acts as a completely decoupled architecture for easier isolation routing mapping directly to mock objects during test runs.
-- **SQL-First Initialization**: Adhering strictly to test requirements, database constraints and seeding operations are cleanly fully performed utilizing `/database/01_schema_and_seed.sql` rather than implicitly mapping it through Sequelize migrations, effectively avoiding sync and race condition errors during Docker container initialization cycles.
 - **JWT Authentication**: Secured endpoints utilizing robust JSON Web Tokens (`jsonwebtoken`) and `bcryptjs`.
